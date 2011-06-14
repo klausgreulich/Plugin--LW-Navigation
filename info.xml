@@ -1,0 +1,12 @@
+<?xml version='1.0' standalone='yes'?>
+<plugin>
+	<version>0.8b</version>
+	<name>LW Navigation</name>
+	<description>
+		Dieses Plugin ermoeglicht die Einbindung drei unterschiedlicher Navigationsarten: 
+		Baumnavigation, Listennavigation und Brotkrumen
+	</description>
+	<params>
+		kommt noch
+	</params>
+</plugin>
