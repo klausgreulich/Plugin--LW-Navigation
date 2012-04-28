@@ -35,6 +35,16 @@ class lw_navigation_tree extends lw_object {
             $this->startlevel = 6;
         }
     }
+    
+    private function isPageAllowed($i)
+    {
+        if ($this->array[$i]['intranet'] == 1) {
+            $auth       = lw_in_auth::getInstance();
+            return $auth->isObjectAllowed('page', $this->array[$i]['id']);
+        } else {
+            return true;
+        }
+    }    
 
     public function getOutput()
     {
@@ -53,12 +63,7 @@ class lw_navigation_tree extends lw_object {
                 $gate = 0;
                 $levelmodifier = $this->array[$i]['level'] - 1;
             }
-            if ($this->array[$i]['intranet'] == 1) {
-                $auth = lw_in_auth::getInstance();
-                $allowed = $auth->isObjectAllowed('page', $this->array[$i]['id']);
-            } else {
-                $allowed = true;
-            }
+            $allowed = $this->isPageAllowed($i);
             if ($gate == 0 && $allowed == true && (strstr($this->array[$i]['path'], ":" . $this->delegate->params['startpage'] . ":"))) {
                 if ($this->array[$i]['id'] == $this->delegate->pid) {
                     $class = "active";
@@ -76,7 +81,7 @@ class lw_navigation_tree extends lw_object {
                     $nextlevel = $this->array[$i + 1]['level'] - $levelmodifier;
 
                     $out.="    <li id=\"page_" . $this->array[$i]['id'] . "\">" . $this->delegate->buildNavigationLink($this->array[$i]);
-                    if ($nextlevel > $currentlevel) {
+                    if ($nextlevel > $currentlevel && $this->isPageAllowed($i+1)) 
                         $out.= "<ul>";
                         $open++;
                     }
