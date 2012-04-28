@@ -36,15 +36,19 @@ class lw_navigation_tree extends lw_object {
         }
     }
     
-    private function isPageAllowed($i)
+    public function isPageAllowed($pageid)
     {
-        if ($this->array[$i]['intranet'] == 1) {
-            $auth       = lw_in_auth::getInstance();
-            return $auth->isObjectAllowed('page', $this->array[$i]['id']);
-        } else {
+        $auth = lw_in_auth::getInstance();
+        if ($auth->isObjectAllowed('page', $pageid))
+        {
             return true;
         }
-    }    
+        if ($this->auth->isInPages($pageid))
+        {
+            return true;
+        }
+        return false;
+    }  
 
     public function getOutput()
     {
