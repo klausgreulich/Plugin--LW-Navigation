@@ -92,6 +92,7 @@ class lw_navigation_tree extends lw_object {
                     }
                     $diff = $currentlevel - $nextlevel;
                     if ($diff > 1) {
+                        $jk=1;
                         while ($jk < $diff) {
                             if ($open > 0) {
                                 $out.= "</ul>\n</li>\n";
