@@ -43,7 +43,7 @@ class lw_navigation_tree extends lw_object {
         {
             return true;
         }
-        if ($this->auth->isInPages($pageid))
+        if ( lw_registry::getInstance()->getEntry("auth")->isInPages($pageid) )
         {
             return true;
         }
@@ -85,7 +85,7 @@ class lw_navigation_tree extends lw_object {
                     $nextlevel = $this->array[$i + 1]['level'] - $levelmodifier;
 
                     $out.="    <li id=\"page_" . $this->array[$i]['id'] . "\">" . $this->delegate->buildNavigationLink($this->array[$i]);
-                    if ($nextlevel > $currentlevel && $this->isPageAllowed($i+1)) 
+                    if ($nextlevel > $currentlevel && $this->isPageAllowed($i+1)) {
                         $out.= "<ul>";
                         $open++;
                     }
